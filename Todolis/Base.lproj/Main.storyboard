@@ -33,7 +33,14 @@
                             <outlet property="delegate" destination="oJX-ND-aoH" id="hth-h1-j0Y"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Todolis" id="lpU-BY-Do7"/>
+                    <navigationItem key="navigationItem" title="Todolis" id="lpU-BY-Do7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="J0m-Zb-r1K">
+                            <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="oJX-ND-aoH" id="NGN-U3-aNf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y90-JX-Gdy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
