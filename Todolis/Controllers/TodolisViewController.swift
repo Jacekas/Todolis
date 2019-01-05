@@ -9,29 +9,13 @@ import UIKit
 class TodolisViewController: UITableViewController {
 
     var itemArray = [Item]()
-    
-    // here we get access to User Defaults of the mobile
-    let defaults = UserDefaults.standard
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let newItem = Item()
-        newItem.title = "Task 1"
-        itemArray.append(newItem)
         
-        let newItem2 = Item()
-        newItem2.title = "Task 2"
-        itemArray.append(newItem2)
-
-        let newItem3 = Item()
-        newItem3.title = "Task 3"
-        itemArray.append(newItem3)
-   
-        if let items = defaults.array(forKey: "TodolisArray") as? [Item] {
-            itemArray = items
-        }
-    }
+        loadItems()
+ }
 
     //MARK: - TableView Datasource Methods
     
@@ -57,7 +41,7 @@ class TodolisViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
-        tableView.reloadData()
+        saveItems()
         tableView.deselectRow(at: indexPath, animated: true)
     }
  
@@ -72,11 +56,7 @@ class TodolisViewController: UITableViewController {
         let newItem = Item()
         newItem.title = textField.text!
         self.itemArray.append(newItem)
-
-        // here we put itemArray data to User Defaults
-        self.defaults.set(self.itemArray, forKey: "TodolisArray")
-            
-        self.tableView.reloadData()
+        self.saveItems()
         }
         alert.addTextField { (alertTextField) in
             alertTextField.placeholder = "Create New Item"
@@ -85,5 +65,33 @@ class TodolisViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-}
 
+    //MARK: - Model Manipulation Methods
+    
+    func saveItems() {
+        // here we put itemArray data to Codable Items
+        let encoder = PropertyListEncoder()
+        do {
+            // we encode the data
+            let data = try encoder.encode(itemArray)
+            // we write the data to Items.plist
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("Error encoding item array, \(error)")
+        }
+        self.tableView.reloadData()
+    }
+
+    func loadItems() {
+        // here we load Codable Items to itemArray
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+            itemArray = try decoder.decode([Item].self, from: data)
+        } catch {
+            print("Error decoding item array, \(error)")
+        }
+    }
+  }
+
+}
