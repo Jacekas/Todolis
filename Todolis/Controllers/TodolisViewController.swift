@@ -8,7 +8,7 @@ import UIKit
 
 class TodolisViewController: UITableViewController {
 
-    var itemArray = ["Task 1", "Task 2", "Task 3"]
+    var itemArray = [Item]()
     
     // here we get access to User Defaults of the mobile
     let defaults = UserDefaults.standard
@@ -16,8 +16,19 @@ class TodolisViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // here we take data from User Defaults and put it to itemArray
-        if let items = defaults.array(forKey: "TodolisArray") as? [String] {
+        let newItem = Item()
+        newItem.title = "Task 1"
+        itemArray.append(newItem)
+        
+        let newItem2 = Item()
+        newItem2.title = "Task 2"
+        itemArray.append(newItem2)
+
+        let newItem3 = Item()
+        newItem3.title = "Task 3"
+        itemArray.append(newItem3)
+   
+        if let items = defaults.array(forKey: "TodolisArray") as? [Item] {
             itemArray = items
         }
     }
@@ -32,22 +43,22 @@ class TodolisViewController: UITableViewController {
         // we run all cells of the Table View with Identifier
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
         // we populate cells with data from itemArray
-        cell.textLabel?.text = itemArray[indexPath.row]
+        let item = itemArray[indexPath.row]
+        cell.textLabel?.text = item.title
+        
+        // Tenary operator => value = condition ? valueIfTrue : valueIfFalse
+        // Default is true, thus, even no need to write "== true"
+        cell.accessoryType = item.done == true ? .checkmark : .none
+        
         return cell
     }
  
     //MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // print(itemArray[indexPath.row])
-        if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark {
-           tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        } else {
-            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        }
-
+        itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
  
     //MARK: - Add New Items
@@ -57,7 +68,10 @@ class TodolisViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Todolis Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // what will happen once the user clicks the Add Item button on our UIAlert
-        self.itemArray.append(textField.text!)
+        
+        let newItem = Item()
+        newItem.title = textField.text!
+        self.itemArray.append(newItem)
 
         // here we put itemArray data to User Defaults
         self.defaults.set(self.itemArray, forKey: "TodolisArray")
@@ -71,8 +85,5 @@ class TodolisViewController: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
     }
-    
-    
-
 }
 
