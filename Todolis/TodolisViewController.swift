@@ -10,8 +10,16 @@ class TodolisViewController: UITableViewController {
 
     var itemArray = ["Task 1", "Task 2", "Task 3"]
     
+    // here we get access to User Defaults of the mobile
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // here we take data from User Defaults and put it to itemArray
+        if let items = defaults.array(forKey: "TodolisArray") as? [String] {
+            itemArray = items
+        }
     }
 
     //MARK: - TableView Datasource Methods
@@ -50,6 +58,10 @@ class TodolisViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             // what will happen once the user clicks the Add Item button on our UIAlert
         self.itemArray.append(textField.text!)
+
+        // here we put itemArray data to User Defaults
+        self.defaults.set(self.itemArray, forKey: "TodolisArray")
+            
         self.tableView.reloadData()
         }
         alert.addTextField { (alertTextField) in
