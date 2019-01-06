@@ -5,12 +5,16 @@
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class CategoryViewController: UITableViewController {
 
-    var categories = [Category]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    // we initialise the access point to Realm Database
+    let realm = try! Realm()
+    
+    // we make variable categories as array of Results
+    // when we fetch data from Realm, we take it like Results
+    var categories : Results<Category>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,12 +24,14 @@ class CategoryViewController: UITableViewController {
     //MARK: - TableView Datasource Methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        // if categories is not nil, the it returns count, if nil, then returns 1
+        // Nil Coalescing Operator
+        return categories?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
-        cell.textLabel?.text = categories[indexPath.row].name
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
         return cell
     }
   
@@ -34,32 +40,32 @@ class CategoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
-    
+    // before we go to another screen, we prepare that screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TodolisViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedCategory = categories[indexPath.row]
+            // important step, we define selectedCategory
+            destinationVC.selectedCategory = categories?[indexPath.row]
         }
     }
     
     //MARK: - Data Manipulation Methods
     
-    func saveCategories() {
+    func save(category : Category) {
         do {
-        try context.save()
+            // we commit changes to Realm that was created in Category
+            try realm.write {
+                realm.add(category)
+            }
         } catch {
-            print("Error saving category, \(error)")
+            print("Error saving data in save procedure, \(error)")
         }
         tableView.reloadData()
     }
     
     func loadCategories() {
-        let request : NSFetchRequest<Category> = Category.fetchRequest()
-        do {
-        categories = try context.fetch(request)
-        } catch {
-        print("Error loading categories, \(error)")
-        }
+        // we fetch all data existing in Realm, related to Category, to categories
+        categories = realm.objects(Category.self)
         tableView.reloadData()
     }
     
@@ -70,10 +76,14 @@ class CategoryViewController: UITableViewController {
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
         // what happen when the user clicks on "+" button
-        let newCategory = Category(context: self.context)
+
+        // we create a newCategory object
+        let newCategory = Category()
+        // and give the name from textField of the Alert interface
         newCategory.name = textField.text!
-        self.categories.append(newCategory)
-        self.saveCategories()
+        // we appen new category to the list of categories automatically
+        // no need to append anymore, it will simply auto-update
+        self.save(category: newCategory)
         }
     
         alert.addAction(action)

@@ -13,8 +13,9 @@
 		3948254221E093AE00401078 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3948254021E093AE00401078 /* Main.storyboard */; };
 		3948254421E093B000401078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3948254321E093B000401078 /* Assets.xcassets */; };
 		3948254721E093B000401078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3948254521E093B000401078 /* LaunchScreen.storyboard */; };
-		3948257721E0FB1400401078 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3948257521E0FB1400401078 /* DataModel.xcdatamodeld */; };
 		3948257921E1248100401078 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3948257821E1248100401078 /* CategoryViewController.swift */; };
+		3954BB8D21E201410083A68E /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954BB8C21E201410083A68E /* Item.swift */; };
+		3954BB8F21E2016B0083A68E /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3954BB8E21E2016B0083A68E /* Category.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,8 +26,9 @@
 		3948254321E093B000401078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3948254621E093B000401078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3948254821E093B000401078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3948257621E0FB1400401078 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3948257821E1248100401078 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		3954BB8C21E201410083A68E /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		3954BB8E21E2016B0083A68E /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		4E9C98577D0B6959927CFE42 /* Pods-Todolis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todolis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todolis/Pods-Todolis.debug.xcconfig"; sourceTree = "<group>"; };
 		52563133705B8BD6FC18F0C6 /* Pods_Todolis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todolis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCD3FFFF2DE8B1C7B1C57E52 /* Pods-Todolis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todolis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todolis/Pods-Todolis.release.xcconfig"; sourceTree = "<group>"; };
@@ -78,7 +80,8 @@
 		3948255021E0CCD000401078 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				3948257521E0FB1400401078 /* DataModel.xcdatamodeld */,
+				3954BB8E21E2016B0083A68E /* Category.swift */,
+				3954BB8C21E201410083A68E /* Item.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -200,16 +203,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Todolis/Pods-Todolis-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
@@ -224,15 +223,11 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
 				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
 			outputPaths = (
 				"$(DERIVED_FILE_DIR)/Pods-Todolis-checkManifestLockResult.txt",
 			);
@@ -248,10 +243,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3954BB8D21E201410083A68E /* Item.swift in Sources */,
 				3948257921E1248100401078 /* CategoryViewController.swift in Sources */,
 				3948253F21E093AE00401078 /* TodolisViewController.swift in Sources */,
-				3948257721E0FB1400401078 /* DataModel.xcdatamodeld in Sources */,
 				3948253D21E093AE00401078 /* AppDelegate.swift in Sources */,
+				3954BB8F21E2016B0083A68E /* Category.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,19 +447,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		3948257521E0FB1400401078 /* DataModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				3948257621E0FB1400401078 /* DataModel.xcdatamodel */,
-			);
-			currentVersion = 3948257621E0FB1400401078 /* DataModel.xcdatamodel */;
-			path = DataModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 3948253121E093AE00401078 /* Project object */;
 }
