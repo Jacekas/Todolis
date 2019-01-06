@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		142CB08CB099DF15B2C4F9A2 /* Pods_Todolis.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52563133705B8BD6FC18F0C6 /* Pods_Todolis.framework */; };
 		3948253D21E093AE00401078 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3948253C21E093AE00401078 /* AppDelegate.swift */; };
 		3948253F21E093AE00401078 /* TodolisViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3948253E21E093AE00401078 /* TodolisViewController.swift */; };
 		3948254221E093AE00401078 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3948254021E093AE00401078 /* Main.storyboard */; };
@@ -26,6 +27,9 @@
 		3948254821E093B000401078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3948257621E0FB1400401078 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		3948257821E1248100401078 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		4E9C98577D0B6959927CFE42 /* Pods-Todolis.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todolis.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todolis/Pods-Todolis.debug.xcconfig"; sourceTree = "<group>"; };
+		52563133705B8BD6FC18F0C6 /* Pods_Todolis.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todolis.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCD3FFFF2DE8B1C7B1C57E52 /* Pods-Todolis.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todolis.release.xcconfig"; path = "Pods/Target Support Files/Pods-Todolis/Pods-Todolis.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				142CB08CB099DF15B2C4F9A2 /* Pods_Todolis.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +49,8 @@
 			children = (
 				3948253B21E093AE00401078 /* Todolis */,
 				3948253A21E093AE00401078 /* Products */,
+				73DD43A19D6C44E2C38C6136 /* Pods */,
+				524F0F4E2849FD6B2B84AA66 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -102,6 +109,23 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		524F0F4E2849FD6B2B84AA66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52563133705B8BD6FC18F0C6 /* Pods_Todolis.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		73DD43A19D6C44E2C38C6136 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4E9C98577D0B6959927CFE42 /* Pods-Todolis.debug.xcconfig */,
+				BCD3FFFF2DE8B1C7B1C57E52 /* Pods-Todolis.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,9 +133,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3948254B21E093B000401078 /* Build configuration list for PBXNativeTarget "Todolis" */;
 			buildPhases = (
+				794052E6EE5CE4766A7AC508 /* [CP] Check Pods Manifest.lock */,
 				3948253521E093AE00401078 /* Sources */,
 				3948253621E093AE00401078 /* Frameworks */,
 				3948253721E093AE00401078 /* Resources */,
+				41842BCE172CD6ACF52EA1F6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -167,6 +193,55 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41842BCE172CD6ACF52EA1F6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Todolis/Pods-Todolis-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Todolis/Pods-Todolis-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		794052E6EE5CE4766A7AC508 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Todolis-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3948253521E093AE00401078 /* Sources */ = {
@@ -318,6 +393,7 @@
 		};
 		3948254C21E093B000401078 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4E9C98577D0B6959927CFE42 /* Pods-Todolis.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -336,6 +412,7 @@
 		};
 		3948254D21E093B000401078 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCD3FFFF2DE8B1C7B1C57E52 /* Pods-Todolis.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
