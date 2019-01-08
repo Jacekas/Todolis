@@ -4,10 +4,11 @@
 //  Created by Jacekas Antulis on 05/01/2019.
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
+// Category is a sub-class
 import UIKit
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
 
     // we initialise the access point to Realm Database
     let realm = try! Realm()
@@ -28,9 +29,11 @@ class CategoryViewController: UITableViewController {
         // Nil Coalescing Operator
         return categories?.count ?? 1
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        // we take the cell from superclass
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        // we do some operations with that cell
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
         return cell
     }
@@ -67,6 +70,26 @@ class CategoryViewController: UITableViewController {
         // we fetch all data existing in Realm, related to Category, to categories
         categories = realm.objects(Category.self)
         tableView.reloadData()
+    }
+    
+    //MARK: - Delete Data from Swipe
+    
+    // we use this function from superclass
+    override func updateModel(at indexPath: IndexPath) {
+        
+        // for testing purposes, we run here all the code in super class function
+        // super.updateModel(at: indexPath)
+        
+        if let categoryForDeletion = self.categories?[indexPath.row]
+            {
+                do {
+                    try self.realm.write {
+                        self.realm.delete(categoryForDeletion)
+                    }
+                } catch {
+                        print("Error deleting category, \(error)")
+                    }
+                }
     }
     
     //MARK: - Add New Categories

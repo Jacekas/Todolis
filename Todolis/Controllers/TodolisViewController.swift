@@ -4,10 +4,11 @@
 //  Created by Jacekas Antulis on 05/01/2019.
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
+// Todolis is a sub-class
 import UIKit
 import RealmSwift
 
-class TodolisViewController: UITableViewController {
+class TodolisViewController: SwipeTableViewController {
 
     var todoItems : Results<Item>?
     let realm = try! Realm()
@@ -30,9 +31,9 @@ class TodolisViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // we run all cells of the Table View with Identifier
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-        // we populate cells with data from todoItems
+
+        //we have here reference to the cell, we take it from super class
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
 
         if let item = todoItems?[indexPath.row] {
             // if not nil
@@ -104,6 +105,20 @@ class TodolisViewController: UITableViewController {
     func loadItems() {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "title", ascending: true)
         tableView.reloadData()
+    }
+
+    override func updateModel(at indexPath: IndexPath) {
+        if let item = todoItems?[indexPath.row] {
+            // if this is not nil
+            do {
+            try realm.write {
+                realm.delete(item)
+            }
+            } catch {
+                print("Error deleting Item, \(error)")
+            }
+        }
+
     }
 }
 
