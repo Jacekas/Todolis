@@ -41,6 +41,7 @@ class CategoryViewController: SwipeTableViewController {
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
 
         // after changing text of cell, we can change the background colour using Chameleon framework
+        // different examples playing with colours
         //cell.backgroundColor = UIColor.randomFlat
         //print(UIColor.flatWhite.hexValue())
         //cell.backgroundColor = UIColor.flatWhite
