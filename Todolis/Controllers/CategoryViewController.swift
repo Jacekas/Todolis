@@ -7,6 +7,7 @@
 // Category is a sub-class
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class CategoryViewController: SwipeTableViewController {
 
@@ -20,6 +21,9 @@ class CategoryViewController: SwipeTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
+
+        // we delete separators between cells
+        tableView.separatorStyle = .none
     }
 
     //MARK: - TableView Datasource Methods
@@ -35,6 +39,15 @@ class CategoryViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         // we do some operations with that cell
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
+
+        // after changing text of cell, we can change the background colour using Chameleon framework
+        //cell.backgroundColor = UIColor.randomFlat
+        //print(UIColor.flatWhite.hexValue())
+        //cell.backgroundColor = UIColor.flatWhite
+        // cell.backgroundColor = UIColor(hexString: "E6FFC1") // nice green-yellow light colour is here
+        
+        cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colour ?? "E6FFC1")
+        
         return cell
     }
   
@@ -104,6 +117,15 @@ class CategoryViewController: SwipeTableViewController {
         let newCategory = Category()
         // and give the name from textField of the Alert interface
         newCategory.name = textField.text!
+        // now we have colour in a string format (Hex)
+        // plus we lighten colour by 90%
+        newCategory.colour = UIColor.randomFlat.hexValue()
+            if let finalColour = UIColor(hexString: newCategory.colour)?.lighten(byPercentage: 0.9)?.hexValue()
+                    {
+                    newCategory.colour = finalColour
+                    print("Created lighter colour")
+                    }
+ 
         // we appen new category to the list of categories automatically
         // no need to append anymore, it will simply auto-update
         self.save(category: newCategory)

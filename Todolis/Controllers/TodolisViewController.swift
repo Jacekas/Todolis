@@ -7,6 +7,7 @@
 // Todolis is a sub-class
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodolisViewController: SwipeTableViewController {
 
@@ -22,6 +23,9 @@ class TodolisViewController: SwipeTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        tableView.separatorStyle = .none
+        
     }
 
     //MARK: - TableView Datasource Methods
@@ -38,6 +42,23 @@ class TodolisViewController: SwipeTableViewController {
         if let item = todoItems?[indexPath.row] {
             // if not nil
             cell.textLabel?.text = item.title
+            
+            // CGFloat range is from 0 to 1 (0 means 0%, 1 means 100%)
+            //if let colour = UIColor(hexString: "E9FFED")?.darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+            //if let colour = FlatWhite().darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+            
+            // selectedCategory cannot be nil
+            // we use here optional chaining
+            // we darken maximum by 0.3 (30%)
+            if let colour = UIColor(hexString: selectedCategory!.colour)?.darken(byPercentage: 0.3*CGFloat(indexPath.row) / CGFloat(todoItems!.count)) {
+
+                cell.backgroundColor = colour
+                cell.textLabel?.textColor = ContrastColorOf(colour, returnFlat: true)
+                
+            }
+            
+            
+            
             cell.accessoryType = item.done ? .checkmark : .none
         }   else {
             cell.textLabel?.text = "No Items Added"

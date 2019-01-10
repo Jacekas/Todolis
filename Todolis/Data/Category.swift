@@ -11,6 +11,8 @@ import RealmSwift
 
 class Category : Object {
     @objc dynamic var name : String = ""
+    @objc dynamic var colour : String = ""
+    
     // following we define "forward" relationship
     // name of relationship of another object here is: "items"
     // name of relationship of current object from outside is: "Item"
