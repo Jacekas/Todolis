@@ -1,7 +1,7 @@
 //  TodolisViewController.swift
 //  Todolis
 //
-//  Created by Jacekas Antulis on 05/01/2019.
+//  Created by Jacekas Antulis on 10/01/2019.
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
 // Todolis is a sub-class
@@ -13,6 +13,8 @@ class TodolisViewController: SwipeTableViewController {
 
     var todoItems : Results<Item>?
     let realm = try! Realm()
+
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var selectedCategory : Category?
     {
@@ -25,9 +27,41 @@ class TodolisViewController: SwipeTableViewController {
         super.viewDidLoad()
 
         tableView.separatorStyle = .none
-        
     }
 
+    // this is a point when just after completing of viewDidLoad() the view starts to show up itself
+    // it starts just before the user sees something on the screen
+    override func viewWillAppear(_ animated: Bool) {
+        title = selectedCategory?.name
+        guard let colourHex = selectedCategory?.colour else { fatalError() }
+        updateNavBar(withHexCode: colourHex)
+    }
+    
+    // here we need to initiate old Category color of Navigator Bar if view is disappear
+    override func viewWillDisappear(_ animated: Bool) {
+        // 57BB2F is a nice green colour
+        updateNavBar(withHexCode: "57BB2F")
+    }
+    
+    //MARK: - Nav Bar Setup Methods
+    
+    func updateNavBar(withHexCode colourHexCode : String) {
+        // here NavigationController already should exist
+        // we check here if navigation controller exists
+        guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+
+        guard let navBarColour = UIColor(hexString: colourHexCode) else { fatalError() }
+        
+        navBar.barTintColor = navBarColour
+        // we make contrast for "+" and other texts
+        navBar.tintColor = ContrastColorOf(navBarColour, returnFlat: true)
+        // we make contrast for "big letters"
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : ContrastColorOf(navBarColour, returnFlat: true)]
+        
+        searchBar.barTintColor = navBarColour
+    }
+    
+    
     //MARK: - TableView Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -54,11 +88,7 @@ class TodolisViewController: SwipeTableViewController {
 
                 cell.backgroundColor = colour
                 cell.textLabel?.textColor = ContrastColorOf(colour, returnFlat: true)
-                
             }
-            
-            
-            
             cell.accessoryType = item.done ? .checkmark : .none
         }   else {
             cell.textLabel?.text = "No Items Added"

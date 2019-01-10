@@ -1,7 +1,7 @@
 //  SwipeTableViewController.swift
 //  Todolis
 //
-//  Created by Jacekas Antulis on 08/01/2019.
+//  Created by Jacekas Antulis on 10/01/2019.
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
 // this is a super class for CategoryViewController and for TodolisViewController

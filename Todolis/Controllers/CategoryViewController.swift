@@ -1,7 +1,7 @@
 //  CategoryViewController.swift
 //  Todolis
 //
-//  Created by Jacekas Antulis on 05/01/2019.
+//  Created by Jacekas Antulis on 10/01/2019.
 //  Copyright © 2019 Jacekas Antulis. All rights reserved.
 
 // Category is a sub-class
@@ -38,19 +38,22 @@ class CategoryViewController: SwipeTableViewController {
         // we take the cell from superclass
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         // we do some operations with that cell
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added yet"
-
-        // after changing text of cell, we can change the background colour using Chameleon framework
-        // different examples playing with colours
-        //cell.backgroundColor = UIColor.randomFlat
-        //print(UIColor.flatWhite.hexValue())
-        //cell.backgroundColor = UIColor.flatWhite
-        // cell.backgroundColor = UIColor(hexString: "E6FFC1") // nice green-yellow light colour is here
-        
-        cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colour ?? "E6FFC1")
-        
+        if let category = categories?[indexPath.row] {
+            cell.textLabel?.text = category.name
+            // after changing text of cell, we can change the background colour using Chameleon framework
+            // different examples playing with colours
+            //cell.backgroundColor = UIColor.randomFlat
+            //print(UIColor.flatWhite.hexValue())
+            //cell.backgroundColor = UIColor.flatWhite
+            // cell.backgroundColor = UIColor(hexString: "E6FFC1") // nice green-yellow light colour is here
+            
+            guard let categoryColour = UIColor(hexString: category.colour) else { fatalError() }
+            
+            cell.backgroundColor = categoryColour
+            cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
+     }
         return cell
-    }
+   }
   
     //MARK: - Data Delegate Methods
 
